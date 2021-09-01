@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">BoNews</string>
+
+    <string name="news_fragment">新闻</string>
+    <string name="photo_fragment">图片</string>
+    <string name="video_fragment">视频</string>
+    <string name="about_fragment">我</string>
+    <string name="news_home">新闻中心</string>
+    <string name="user_home">用户中心</string>
+    <string name="picture_home">图片中心</string>
+    <string name="likes">点赞</string>
+    <string name="forgot">忘记密码</string>
+</resources>
