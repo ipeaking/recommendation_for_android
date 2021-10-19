@@ -20,6 +20,7 @@ public interface HttpConfig {
      * 点赞
      */
     String LIKES = "recommendation/likes";
+    String READ = "recommendation/read";
 
     /**
      * 收藏

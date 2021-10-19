@@ -66,6 +66,7 @@ public class DetailActivity extends BaseActivity {
         mGoodView = new GoodView(this);
         mToolBar.setTitle(newsBean.getTitle());
         requestData();
+        addRead();
         setMarqueeForToolbarTitleView(mToolBar);
         mLCCache = new SpCache(this);
         boolean likesStatus = getLikesStatus(newsBean.getContentId());
@@ -195,6 +196,39 @@ public class DetailActivity extends BaseActivity {
                     }
                 });
     }
+
+     private void addRead() {
+         JSONObject jsonObject = new JSONObject();
+         try {
+             jsonObject.put("content_id", newsBean.getContentId());
+             jsonObject.put("user_id", LoginUtils.getUserId());
+             jsonObject.put("title", newsBean.getTitle());
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+         ViseHttp.POST(HttpConfig.READ)
+                 .baseUrl(HttpConfig.BASE_URL)
+                 .setJson(jsonObject)
+                 .request(new ACallback<String>() {
+                     @Override
+                     public void onSuccess(String data) {
+                         JsonObject asJsonObject = new JsonParser().parse(data).getAsJsonObject();
+                         JsonElement msg = asJsonObject.get("msg");
+                         JsonElement code = asJsonObject.get("code");
+                         int asInt = code.getAsInt();
+                         if (asInt == 0) {
+                             Toast.makeText(DetailActivity.this, "reading", Toast.LENGTH_SHORT).show();
+                         } else {
+                             Toast.makeText(DetailActivity.this, msg.getAsString(), Toast.LENGTH_SHORT).show();
+                         }
+                     }
+
+                     @Override
+                     public void onFail(int errCode, String errMsg) {
+                         Toast.makeText(DetailActivity.this, errCode + "  " + errMsg + "", Toast.LENGTH_SHORT).show();
+                     }
+                 });
+     }
 
     private void addLike() {
         JSONObject jsonObject = new JSONObject();
